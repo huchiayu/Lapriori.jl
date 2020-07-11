@@ -1,12 +1,13 @@
 # Lapriori.jl
 performs "a priori" analysis of SGS turbulence models for Lagrangian hydro codes
 
-## Filtered SGS fields
+## Filtered fields and gradients
 The function
 ```
-calc_sgs_fields(fname_in, fname_out)
+calc_filtered_fields(fname_in, fname_out)
 ```
 calculates filtered fields using a cubic spline kernel. 
+The gradients are calculated using the least-square technique which is exact for linear functions.
 
 * ```fname_in```: input file, a Gadget snapshot of format 3 (HDF5).
 
@@ -16,7 +17,7 @@ calculates filtered fields using a cubic spline kernel.
 ## SGS fluxes (true vs. modeled)
 The function
 ```
-calc_sgs_data(fname_in, fname_out)
+calc_sgs_fluxes(fname_in, fname_out)
 ```
 calculates the true and modeled SGS fluxes given the filtered SGS fields.
 
