@@ -26,7 +26,7 @@ function smatrices(M::Array{T,3}) where {T}
     return A
 end
 
-function calc_sgs_data(fname_in::String, fname_out::String)
+function calc_sgs_fluxes(fname_in::String, fname_out::String)
 
     f_rho::Array{T,1} = h5read(fname_in, "SGS/FilteredDensity");
     N_gas::Int32 = Nloop::Int32 = size(f_rho,1)
@@ -153,23 +153,4 @@ function calc_sgs_data(fname_in::String, fname_out::String)
 
     return q_true, q_eddy, q_grad, tau_true, tau_eddy, tau_grad
 
-end
-
-
-#snaps = 200:5:600
-snaps = 701:701
-file_path = "/Users/chu/simulations/turbbox/N128/"
-
-for k in snaps
-    println(k)
-    if k < 10
-        num = "00" * string(k)
-    elseif k < 100
-        num = "0" * string(k)
-    else
-        num = string(k)
-    end
-    fname_in = file_path * "/sgs_fields_" * num * ".hdf5"
-    fname_out = file_path * "/sgs_model_" * num * ".hdf5"
-    @time q_true, q_eddy, q_grad, tau_true, tau_eddy, tau_grad = calc_sgs_data(fname_in, fname_out)
 end

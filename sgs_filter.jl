@@ -151,7 +151,7 @@ function calc_gradient(field::Vector{T}, X::Array{SVector{N,T},1}, hsml::Vector{
 end
 
 
-function calc_sgs_fields(fname_in::String, fname_out::String)
+function calc_filtered_fields(fname_in::String, fname_out::String)
 
     @time header, N_gas, pos, vel, rho, u, mass, hsml, scal, id_gas = read_snap(fname_in, T);
 
@@ -213,27 +213,4 @@ function calc_sgs_fields(fname_in::String, fname_out::String)
     h5write(fname_out, "SGS/FilteredVzGradient"      , reshape(reinterpret(T,grad_fa_vz),3,N_gas))
     close(fid)
 
-end
-
-
-
-
-
-#snaps = 200:5:600
-file_path = "/Users/chu/simulations/turbbox/N128/"
-snaps = 701:701
-
-for k in snaps
-    println(k)
-    if k < 10
-        num = "00" * string(k)
-    elseif k < 100
-        num = "0" * string(k)
-    else
-        num = string(k)
-    end
-    fname_in = file_path * "/snap_"*num*".hdf5"
-    fname_out = file_path * "/sgs_fields_" * num * ".hdf5"
-
-    @time calc_sgs_fields(fname_in, fname_out)
 end
